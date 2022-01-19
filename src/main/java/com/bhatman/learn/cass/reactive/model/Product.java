@@ -17,7 +17,7 @@ public class Product {
 
 	@PrimaryKey
 	public UUID prod_id;
-	public String description;
+	public String type;
 	public String location;
 	public String name;
 	public float price;
