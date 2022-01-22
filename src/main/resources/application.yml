@@ -1,0 +1,14 @@
+# Expose API through this port (setup the UI accordingly)
+server:
+  port: ${LISTENING_PORT:8080}
+
+# Enable Spring Security through Flag
+cassreactive.security.enable: ${SECURE_API:false}
+
+####
+# When working locally we may need to create the keyspace
+# We cannot define the keyspace name in 'application.conf' as Mapper will load immediately
+# Defining keys to create keyspace if needed
+###
+cassreactive.cassandra.local-keyspace.create: ${CASSANDRA_KEYSPACE_CREATE:true}
+cassreactive.cassandra.local-keyspace.name: ${CASSANDRA_KEYSPACE_NAME:learn}

@@ -1,0 +1,25 @@
+{
+  "properties": [
+    {
+      "name": "cassreactive.security.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true"
+    },
+    {
+      "name": "cassreactive.cassandra.local-keyspace.create",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true"
+    },
+    {
+      "name": "cassreactive.cassandra.local-keyspace.name",
+      "type": "java.lang.String",
+      "defaultValue": "learn"
+    },
+    {
+      "name": "cassreactive.cassandra.local-keyspace.cql",
+      "type": "java.lang.String",
+      "defaultValue": "CREATE KEYSPACE IF NOT EXISTS learn WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };"
+    }
+  ],
+  "hints": []
+}

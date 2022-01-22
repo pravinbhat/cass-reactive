@@ -1,15 +1,12 @@
 CREATE KEYSPACE learn WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
 
 CREATE TABLE learn.product (
-    prod_id uuid,
-    created timestamp,
+    product_id uuid PRIMARY KEY,
     location text,
     name text,
     price float,
-    type text static,
-    PRIMARY KEY (prod_id, created)
-) WITH CLUSTERING ORDER BY (created ASC)
-    AND additional_write_policy = '99PERCENTILE'
+    type text
+) WITH additional_write_policy = '99PERCENTILE'
     AND bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
     AND comment = ''
@@ -25,6 +22,6 @@ CREATE TABLE learn.product (
     AND read_repair = 'BLOCKING'
     AND speculative_retry = '99PERCENTILE';
 
-COPY product (prod_id, name, created, type, location, price) 
-FROM '<add_path>/products.csv' 
+COPY product (product_id, name, type, location, price) 
+FROM '/Users/pravin.bhat/code/github/pravinbhat/learn/cass-reactive/src/main/resources/products.csv' 
 WITH HEADER = TRUE AND DELIMITER = ',' AND DATETIMEFORMAT='%Y/%m/%d';
