@@ -3,7 +3,7 @@
     {
       "name": "cassreactive.security.enable",
       "type": "java.lang.Boolean",
-      "defaultValue": "true"
+      "defaultValue": "false"
     },
     {
       "name": "cassreactive.cassandra.local-keyspace.create",

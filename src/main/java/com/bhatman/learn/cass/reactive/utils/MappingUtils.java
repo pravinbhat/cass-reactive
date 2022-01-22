@@ -39,6 +39,7 @@ public class MappingUtils {
         product.setId(entity.getProductId());
         product.setName(entity.getName());
         product.setType(entity.getType());
+        product.setLocation(entity.getLocation());
         product.setPrice(entity.getPrice());
         return product;
     }
