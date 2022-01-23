@@ -1,11 +1,10 @@
-package com.bhatman.learn.cass.reactive.repository;
+package com.bhatman.learn.cass.reactive.product;
 
-import static com.bhatman.learn.cass.reactive.model.ProductEntity.PRODUCT_ID;
-import static com.bhatman.learn.cass.reactive.model.ProductEntity.PRODUCT_PRICE;
+import static com.bhatman.learn.cass.reactive.product.ProductEntity.PRODUCT_ID;
+import static com.bhatman.learn.cass.reactive.product.ProductEntity.PRODUCT_PRICE;
 
 import java.util.UUID;
 
-import com.bhatman.learn.cass.reactive.model.ProductEntity;
 import com.datastax.dse.driver.api.core.cql.reactive.ReactiveResultSet;
 import com.datastax.dse.driver.api.mapper.reactive.MappedReactiveResultSet;
 import com.datastax.oss.driver.api.mapper.annotations.Dao;

@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.bhatman.learn.cass.reactive.repository.ProductReactiveDao;
-import com.bhatman.learn.cass.reactive.repository.ProductReactiveDaoMapper;
-import com.bhatman.learn.cass.reactive.repository.ProductReactiveDaoMapperBuilder;
+import com.bhatman.learn.cass.reactive.product.ProductReactiveDao;
+import com.bhatman.learn.cass.reactive.product.ProductReactiveDaoMapper;
+import com.bhatman.learn.cass.reactive.product.ProductReactiveDaoMapperBuilder;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 

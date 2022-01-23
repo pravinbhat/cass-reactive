@@ -1,8 +1,7 @@
-package com.bhatman.learn.cass.reactive.repository;
+package com.bhatman.learn.cass.reactive.product;
 
 import static com.datastax.oss.driver.api.querybuilder.SchemaBuilder.createTable;
 
-import com.bhatman.learn.cass.reactive.model.ProductEntity;
 import com.datastax.oss.driver.api.core.CqlIdentifier;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.type.DataTypes;

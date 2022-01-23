@@ -1,4 +1,4 @@
-package com.bhatman.learn.cass.reactive;
+package com.bhatman.learn.cass.reactive.product;
 
 import java.util.UUID;
 

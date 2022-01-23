@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.bhatman.learn.cass.reactive.Product;
-import com.bhatman.learn.cass.reactive.model.ProductEntity;
+import com.bhatman.learn.cass.reactive.product.Product;
+import com.bhatman.learn.cass.reactive.product.ProductEntity;
 
 import org.springframework.lang.NonNull;
 
