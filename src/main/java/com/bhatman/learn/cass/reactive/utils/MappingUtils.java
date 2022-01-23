@@ -3,6 +3,7 @@ package com.bhatman.learn.cass.reactive.utils;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -42,6 +43,16 @@ public class MappingUtils {
         product.setLocation(entity.getLocation());
         product.setPrice(entity.getPrice());
         return product;
+    }
+
+    public static ProductEntity mapProductAsEntity(@Valid Product product) {
+        ProductEntity pe = new ProductEntity();
+        pe.setProductId(product.getId());
+        pe.setName(product.getName());
+        pe.setType(product.getType());
+        pe.setLocation(product.getLocation());
+        pe.setPrice(product.getPrice());
+        return pe;
     }
 
 }
