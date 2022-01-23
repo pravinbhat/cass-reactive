@@ -38,7 +38,10 @@ public interface ProductReactiveDao {
     @Update
     ReactiveResultSet upsert(ProductEntity product);
 
-    @Delete
+    @Delete(entityClass = ProductEntity.class)
     ReactiveResultSet delete(ProductEntity product);
+
+    @Delete(entityClass = ProductEntity.class)
+    ReactiveResultSet deleteById(UUID productId);
 
 }

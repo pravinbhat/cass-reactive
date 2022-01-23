@@ -8,18 +8,23 @@ import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
+import java.time.Duration;
 import java.util.Objects;
 import java.util.UUID;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 import com.bhatman.learn.cass.reactive.utils.MappingUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,4 +70,23 @@ public class ProductController {
                 .map(MappingUtils::mapEntityAsProduct);
     }
 
+    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public Mono<Product> upsertProduct(
+            UriComponentsBuilder uc,
+            @PathVariable("id") @NotBlank String id,
+            @RequestBody @Valid Product product) {
+        Assert.isTrue(UUID.fromString(id).equals(product.getId()),
+                "Product identifier provided does not match the value in path");
+        Objects.requireNonNull(product);
+        ProductEntity pe = MappingUtils.mapProductAsEntity(product);
+        return Mono.from(productDao.upsert(pe))
+                .map(rr -> pe)
+                .map(MappingUtils::mapEntityAsProduct);
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<Void> deleteById(
+            @NotBlank @PathVariable("id") @NotBlank UUID id) {
+        return Mono.from(productDao.deleteById(id)).and(Mono.empty());
+    }
 }
