@@ -22,8 +22,8 @@
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<cassandra-java-driver.version>4.11.0</cassandra-java-driver.version>
-		<cassandra-native-protocol.version>1.4.11</cassandra-native-protocol.version>
+		<cassandra-java-driver.version>4.13.0</cassandra-java-driver.version>
+		<cassandra-native-protocol.version>1.5.0</cassandra-native-protocol.version>
 		<maven.test.skip>false</maven.test.skip>
 	</properties>
 
