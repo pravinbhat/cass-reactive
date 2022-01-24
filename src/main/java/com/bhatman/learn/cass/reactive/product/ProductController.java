@@ -8,7 +8,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-import java.time.Duration;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -36,57 +35,67 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/products")
 @CrossOrigin(methods = { PUT, POST, GET, OPTIONS, DELETE, PATCH }, maxAge = 3600, allowedHeaders = { "x-requested-with",
-        "origin", "content-type", "accept" }, origins = "*")
+                "origin", "content-type", "accept" }, origins = "*")
 public class ProductController {
 
-    @Autowired
-    private ProductReactiveDao productDao;
+        @Autowired
+        private ProductReactiveDao productDao;
 
-    @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public Flux<Product> getProducts() {
-        return Flux.from(productDao.findAll())
-                .map(MappingUtils::mapEntityAsProduct);
-    }
+        @GetMapping(produces = APPLICATION_JSON_VALUE)
+        public Flux<Product> getProducts() {
+                return Flux.from(productDao.findAll())
+                                .map(MappingUtils::mapEntityAsProduct);
+        }
 
-    @GetMapping(value = "/{id}/price/{price}", produces = APPLICATION_JSON_VALUE)
-    public Flux<Product> getUserByAge(@PathVariable UUID id, @PathVariable float price) {
-        return Flux.from(productDao.findByPriceLessThan(id, price))
-                .map(MappingUtils::mapEntityAsProduct);
-    }
+        @GetMapping(value = "/{id}/price/{price}", produces = APPLICATION_JSON_VALUE)
+        public Flux<Product> getUserByAge(@PathVariable UUID id, @PathVariable float price) {
+                return Flux.from(productDao.findByPriceLessThan(id, price))
+                                .map(MappingUtils::mapEntityAsProduct);
+        }
 
-    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public Mono<Product> getProduct(@PathVariable UUID id) {
-        return Mono.from(productDao.findByProductId(id))
-                .map(MappingUtils::mapEntityAsProduct);
-    }
+        @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+        public Mono<Product> getProduct(@PathVariable UUID id) {
+                return Mono.from(productDao.findByProductId(id))
+                                .map(MappingUtils::mapEntityAsProduct);
+        }
 
-    @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public Mono<Product> createProduct(UriComponentsBuilder uc, @RequestBody @Valid Product product) {
-        product.setId(UUID.randomUUID());
-        Objects.requireNonNull(product);
-        ProductEntity pe = MappingUtils.mapProductAsEntity(product);
-        return Mono.from(productDao.upsert(pe))
-                .map(rr -> pe)
-                .map(MappingUtils::mapEntityAsProduct);
-    }
+        @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+        public Mono<Product> createProduct(UriComponentsBuilder uc, @RequestBody @Valid Product product) {
+                product.setId(UUID.randomUUID());
+                Objects.requireNonNull(product);
+                ProductEntity pe = MappingUtils.mapProductAsEntity(product);
+                return Mono.from(productDao.upsert(pe))
+                                .map(rr -> pe)
+                                .map(MappingUtils::mapEntityAsProduct);
+        }
 
-    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public Mono<Product> upsertProduct(
-            UriComponentsBuilder uc,
-            @PathVariable("id") @NotBlank String id,
-            @RequestBody @Valid Product product) {
-        Assert.isTrue(UUID.fromString(id).equals(product.getId()),
-                "Product identifier provided does not match the value in path");
-        Objects.requireNonNull(product);
-        ProductEntity pe = MappingUtils.mapProductAsEntity(product);
-        return Mono.from(productDao.upsert(pe))
-                .map(rr -> pe)
-                .map(MappingUtils::mapEntityAsProduct);
-    }
+        @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+        public Mono<Product> upsertProduct(
+                        UriComponentsBuilder uc,
+                        @PathVariable("id") @NotBlank String id,
+                        @RequestBody Product product) {
+                Assert.isTrue(UUID.fromString(id).equals(product.getId()),
+                                "Product identifier provided does not match the value in path");
+                Objects.requireNonNull(product);
+                ProductEntity pe = MappingUtils.mapProductAsEntity(product);
+                return Mono.from(productDao.upsert(pe))
+                                .map(rr -> pe)
+                                .map(MappingUtils::mapEntityAsProduct);
+        }
 
-    @DeleteMapping("/{id}")
-    public Mono<Void> deleteById(
-            @NotBlank @PathVariable("id") @NotBlank UUID id) {
-        return Mono.from(productDao.deleteById(id)).and(Mono.empty());
-    }
+        @PutMapping(value = "/in", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+        public Mono<Void> upsertProductIn(
+                        UriComponentsBuilder uc,
+                        @RequestBody @NotBlank ProductsIn productsIn) {
+                Objects.requireNonNull(productsIn);
+                ProductEntity pe = MappingUtils.mapProductAsEntity(productsIn.product);
+                return Mono.from(productDao.upsertIn(pe, productsIn.productIds)).and(Mono.empty());
+        }
+
+        @DeleteMapping("/{id}")
+        public Mono<Void> deleteById(
+                        @NotBlank @PathVariable("id") @NotBlank UUID id) {
+                return Mono.from(productDao.deleteById(id)).and(Mono.empty());
+        }
+
 }

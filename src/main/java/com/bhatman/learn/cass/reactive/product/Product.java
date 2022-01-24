@@ -12,7 +12,7 @@ public class Product {
 	public String name;
 	public String type;
 	public String location;
-	public float price;
+	public Float price;
 
 	public Product(UUID productId) {
 		this.id = productId;

@@ -35,6 +35,6 @@ public class ProductEntity {
 	public String location;
 
 	@CqlName(PRODUCT_PRICE)
-	public float price;
+	public Float price;
 
 }
