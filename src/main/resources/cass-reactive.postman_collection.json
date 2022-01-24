@@ -29,7 +29,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\":\"lettuce\",\n    \"type\":\"vegi\",\n    \"location\":\"NY\",\n    \"price\": 4.34\n}",
+					"raw": "{\n    \"name\":\"potato\",\n    \"type\":\"vegi\",\n    \"location\":\"NY\",\n    \"price\": 14.34\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,7 +55,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"4b925ef3-ef59-4b75-beda-d3a7b9c3acae\",\n    \"name\":\"lettuce\",\n    \"type\":\"vegi\",\n    \"location\":\"NC\",\n    \"price\": 4.34\n}",
+					"raw": "{\n    \"id\": \"30163da5-5039-4d4d-889a-8bea31878723\",\n    \"name\":\"lettuce\",\n    \"type\":\"vegi\",\n    \"location\":\"NC\",\n    \"price\": 4.34\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -63,20 +63,47 @@
 					}
 				},
 				"url": {
-					"raw": "{{server}}/products/4b925ef3-ef59-4b75-beda-d3a7b9c3acae",
+					"raw": "{{server}}/products/30163da5-5039-4d4d-889a-8bea31878723",
 					"host": [
 						"{{server}}"
 					],
 					"path": [
 						"products",
-						"4b925ef3-ef59-4b75-beda-d3a7b9c3acae"
+						"30163da5-5039-4d4d-889a-8bea31878723"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Products/price",
+			"name": "UpdateProductsIn",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productIds\": [\"30163da5-5039-4d4d-889a-8bea31878723\",\"1645ea59-14bd-11e5-a993-8138354b7e40\",\"1645ea59-14bd-11e5-a993-8138354b7e50\"],\n    \"product\": {\n        \"location\":\"TX\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/products/in",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products",
+						"in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products/price-less-than",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -101,13 +128,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/products/4b925ef3-ef59-4b75-beda-d3a7b9c3acae",
+					"raw": "{{server}}/products/1645ea59-14bd-11e5-a993-8138354b7e30",
 					"host": [
 						"{{server}}"
 					],
 					"path": [
 						"products",
-						"4b925ef3-ef59-4b75-beda-d3a7b9c3acae"
+						"1645ea59-14bd-11e5-a993-8138354b7e30"
 					]
 				}
 			},
