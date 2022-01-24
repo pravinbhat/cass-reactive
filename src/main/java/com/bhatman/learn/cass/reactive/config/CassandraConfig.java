@@ -20,14 +20,6 @@ public class CassandraConfig {
 	/** Logger for the class. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(CassandraConfig.class);
 
-	/**
-	 * This flag will help us decide between 2 configurations files
-	 * `application-astra.conf` or `application-local.conf`
-	 * 
-	 * Why not simply injecting the filename ? If we are using local
-	 * we also create the keyspace.
-	 */
-
 	@Value("${cassreactive.cassandra.local-keyspace.create}")
 	private boolean localKeyspaceCreate;
 
@@ -70,8 +62,7 @@ public class CassandraConfig {
 	public ProductReactiveDao productDao(CqlSession cqlSession) {
 		ProductReactiveDaoMapper productMapper = new ProductReactiveDaoMapperBuilder(cqlSession).build();
 		productMapper.createSchema(cqlSession);
-		ProductReactiveDao productDao = productMapper.productDao(cqlSession.getKeyspace().get());
-		return productDao;
+		return productMapper.productDao(cqlSession.getKeyspace().get());
 	}
 
 }

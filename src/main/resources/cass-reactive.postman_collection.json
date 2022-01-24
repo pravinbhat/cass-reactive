@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "b93a3f1d-6f29-4d9c-9877-b91e8c6f2236",
+		"name": "cass-reactive",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AllProducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/products",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"lettuce\",\n    \"type\":\"vegi\",\n    \"location\":\"NY\",\n    \"price\": 4.34\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/products",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProduct",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"4b925ef3-ef59-4b75-beda-d3a7b9c3acae\",\n    \"name\":\"lettuce\",\n    \"type\":\"vegi\",\n    \"location\":\"NC\",\n    \"price\": 4.34\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/products/4b925ef3-ef59-4b75-beda-d3a7b9c3acae",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products",
+						"4b925ef3-ef59-4b75-beda-d3a7b9c3acae"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products/price",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/products/1645ea59-14bd-11e5-a993-8138354b7e30/price/14",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products",
+						"1645ea59-14bd-11e5-a993-8138354b7e30",
+						"price",
+						"14"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProductsById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/products/4b925ef3-ef59-4b75-beda-d3a7b9c3acae",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products",
+						"4b925ef3-ef59-4b75-beda-d3a7b9c3acae"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProduct",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/products/4b925ef3-ef59-4b75-beda-d3a7b9c3acae",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products",
+						"4b925ef3-ef59-4b75-beda-d3a7b9c3acae"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
