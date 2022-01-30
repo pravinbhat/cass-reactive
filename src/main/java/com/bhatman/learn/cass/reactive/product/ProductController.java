@@ -84,12 +84,13 @@ public class ProductController {
         }
 
         @PutMapping(value = "/in", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-        public Mono<Void> upsertProductIn(
+        public Mono<Product> upsertProductIn(
                         UriComponentsBuilder uc,
                         @RequestBody @NotBlank ProductsIn productsIn) {
                 Objects.requireNonNull(productsIn);
                 ProductEntity pe = MappingUtils.mapProductAsEntity(productsIn.product);
-                return Mono.from(productDao.upsertIn(pe, productsIn.productIds)).and(Mono.empty());
+                return Mono.from(productDao.upsertIn(pe, productsIn.productIds)).map(rr -> pe)
+                                .map(MappingUtils::mapEntityAsProduct);
         }
 
         @DeleteMapping("/{id}")

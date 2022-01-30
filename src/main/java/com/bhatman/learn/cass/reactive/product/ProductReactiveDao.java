@@ -17,16 +17,6 @@ import com.datastax.oss.driver.api.mapper.entity.saving.NullSavingStrategy;
 @Dao
 public interface ProductReactiveDao {
 
-    /**
-     * Find all records in the table.
-     * 
-     * @implNote Be careful if your data is large or you work with a large cluster,
-     *           the function do a full scan cluster but paging is not implemented
-     *           in the Angular UI.
-     * 
-     * @return
-     *         the resultSet not exhausted to get the infos
-     */
     @Select
     MappedReactiveResultSet<ProductEntity> findAll();
 
@@ -37,7 +27,7 @@ public interface ProductReactiveDao {
             + "<= :price", allowFiltering = true)
     MappedReactiveResultSet<ProductEntity> findByPriceLessThan(UUID productId, float price);
 
-    @Update
+    @Update(nullSavingStrategy = NullSavingStrategy.DO_NOT_SET)
     ReactiveResultSet upsert(ProductEntity product);
 
     @Update(nullSavingStrategy = NullSavingStrategy.DO_NOT_SET, customWhereClause = PRODUCT_ID + " in :productIds")
