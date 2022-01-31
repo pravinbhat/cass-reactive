@@ -23,18 +23,18 @@ public class ProductEntity {
 
 	@PartitionKey
 	@CqlName(PRODUCT_ID)
-	public UUID productId;
+	private UUID productId;
 
 	@CqlName(PRODUCT_NAME)
-	public String name;
+	private String name;
 
 	@CqlName(PRODUCT_TYPE)
-	public String type;
+	private String type;
 
 	@CqlName(PRODUCT_LOCATION)
-	public String location;
+	private String location;
 
 	@CqlName(PRODUCT_PRICE)
-	public Float price;
+	private Float price;
 
 }

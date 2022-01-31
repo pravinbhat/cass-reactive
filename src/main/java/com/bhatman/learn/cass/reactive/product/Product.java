@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
-	public UUID id;
-	public String name;
-	public String type;
-	public String location;
-	public Float price;
+	private UUID id;
+	private String name;
+	private String type;
+	private String location;
+	private Float price;
 
 	public Product(UUID productId) {
 		this.id = productId;

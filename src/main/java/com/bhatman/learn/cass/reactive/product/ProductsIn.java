@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ProductsIn {
-    public List<UUID> productIds;
-    public Product product;
+    private List<UUID> productIds;
+    private Product product;
 }

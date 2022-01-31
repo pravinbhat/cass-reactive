@@ -22,8 +22,13 @@ public class ProductPagingDao {
     CqlSession session;
 
     public ProductsAndPageId getProductsFirstPage() {
-        ResultSet rs = session.execute(allProductsQry);
-        return getNextPage(rs);
+        return getNextPage(session.execute(allProductsQry));
+    }
+
+    public ProductsAndPageId getProductsNextPage(PagingState pagingState) {
+        SimpleStatement statement = SimpleStatement.builder(allProductsQry)
+                .setPagingState(pagingState.getRawPagingState()).build();
+        return getNextPage(session.execute(statement));
     }
 
     public ProductsAndPageId getNextPage(ResultSet rs) {
@@ -45,10 +50,4 @@ public class ProductPagingDao {
         return new ProductsAndPageId(products, StringEscapeUtils.escapeHtml4(pagingState.toString()));
     }
 
-    public ProductsAndPageId getProductsNextPage(PagingState pagingState) {
-        SimpleStatement statement = SimpleStatement.builder(allProductsQry)
-                .setPagingState(pagingState.getRawPagingState()).build();
-        ResultSet rs = session.execute(statement);
-        return getNextPage(rs);
-    }
 }

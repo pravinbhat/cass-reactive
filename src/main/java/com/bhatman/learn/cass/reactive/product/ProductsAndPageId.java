@@ -3,9 +3,11 @@ package com.bhatman.learn.cass.reactive.product;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @AllArgsConstructor
+@Data
 public class ProductsAndPageId {
-    public List<Product> products;
-    public String pageID;
+    private List<Product> products;
+    private String pageID;
 }

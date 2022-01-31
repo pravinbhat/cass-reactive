@@ -104,8 +104,8 @@ public class ProductController {
                         UriComponentsBuilder uc,
                         @RequestBody @NotBlank ProductsIn productsIn) {
                 Objects.requireNonNull(productsIn);
-                ProductEntity pe = MappingUtils.mapProductAsEntity(productsIn.product);
-                return Mono.from(productDao.upsertIn(pe, productsIn.productIds)).map(rr -> pe)
+                ProductEntity pe = MappingUtils.mapProductAsEntity(productsIn.getProduct());
+                return Mono.from(productDao.upsertIn(pe, productsIn.getProductIds())).map(rr -> pe)
                                 .map(MappingUtils::mapEntityAsProduct);
         }
 
