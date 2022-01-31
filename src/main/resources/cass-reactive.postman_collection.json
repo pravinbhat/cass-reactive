@@ -122,6 +122,33 @@
 			"response": []
 		},
 		{
+			"name": "UpdateProductsInBulk",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productIds\": [\"30163da5-5039-4d4d-889a-8bea31878723\",\"f74d3be0-ce73-4e5f-97a8-c29d3e12bf29\",\"1645ea59-14bd-11e5-a993-8138354b7e50\"],\n    \"product\": {\n        \"location\":\"TX\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/products/in_parallel",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products",
+						"in_parallel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Products/price-less-than",
 			"request": {
 				"method": "GET",

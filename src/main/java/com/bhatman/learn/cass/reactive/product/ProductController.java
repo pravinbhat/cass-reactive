@@ -99,6 +99,8 @@ public class ProductController {
                                 .map(MappingUtils::mapEntityAsProduct);
         }
 
+        // This endpoint is not efficient as it uses "in" clause & "in" is not
+        // recommended in Cassandra. Use the "bulk_update" endpoint instead
         @PutMapping(value = "/in", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
         public Mono<Product> upsertProductIn(
                         UriComponentsBuilder uc,
@@ -107,6 +109,20 @@ public class ProductController {
                 ProductEntity pe = MappingUtils.mapProductAsEntity(productsIn.getProduct());
                 return Mono.from(productDao.upsertIn(pe, productsIn.getProductIds())).map(rr -> pe)
                                 .map(MappingUtils::mapEntityAsProduct);
+        }
+
+        // Use this endpoint for bulk update instead of "in". It calls single updates in
+        // parallel
+        @PutMapping(value = "/bulk_update", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+        public Flux<Product> upsertProductInParallel(
+                        UriComponentsBuilder uc,
+                        @RequestBody @NotBlank ProductsIn productsIn) {
+                Objects.requireNonNull(productsIn);
+                ProductEntity pe = MappingUtils.mapProductAsEntity(productsIn.getProduct());
+                return Flux.fromStream(productsIn.getProductIds().stream().map(pId -> {
+                        pe.setProductId(pId);
+                        return pe;
+                })).flatMap(pE -> upsertProduct(pE));
         }
 
         @DeleteMapping("/{id}")
