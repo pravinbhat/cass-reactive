@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import com.bhatman.learn.cass.reactive.utils.MappingUtils;
+import com.datastax.oss.driver.api.core.cql.PagingState;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -41,10 +42,23 @@ public class ProductController {
         @Autowired
         private ProductReactiveDao productDao;
 
+        @Autowired
+        private ProductPagingDao productPagingDao;
+
         @GetMapping(produces = APPLICATION_JSON_VALUE)
         public Flux<Product> getProducts() {
                 return Flux.from(productDao.findAll())
                                 .map(MappingUtils::mapEntityAsProduct);
+        }
+
+        @GetMapping(value = "/page", produces = APPLICATION_JSON_VALUE)
+        public ProductsAndPageId getProductsFirstPage() {
+                return productPagingDao.getProductsFirstPage();
+        }
+
+        @GetMapping(value = "/page/{pageId}", produces = APPLICATION_JSON_VALUE)
+        public ProductsAndPageId getProductsPage(@PathVariable("pageId") String pageId) {
+                return productPagingDao.getProductsNextPage(PagingState.fromString(pageId));
         }
 
         @GetMapping(value = "/{id}/price/{price}", produces = APPLICATION_JSON_VALUE)
@@ -64,9 +78,7 @@ public class ProductController {
                 product.setId(UUID.randomUUID());
                 Objects.requireNonNull(product);
                 ProductEntity pe = MappingUtils.mapProductAsEntity(product);
-                return Mono.from(productDao.upsert(pe))
-                                .map(rr -> pe)
-                                .map(MappingUtils::mapEntityAsProduct);
+                return upsertProduct(pe);
         }
 
         @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
@@ -78,6 +90,10 @@ public class ProductController {
                                 "Product identifier provided does not match the value in path");
                 Objects.requireNonNull(product);
                 ProductEntity pe = MappingUtils.mapProductAsEntity(product);
+                return upsertProduct(pe);
+        }
+
+        private Mono<Product> upsertProduct(ProductEntity pe) {
                 return Mono.from(productDao.upsert(pe))
                                 .map(rr -> pe)
                                 .map(MappingUtils::mapEntityAsProduct);
