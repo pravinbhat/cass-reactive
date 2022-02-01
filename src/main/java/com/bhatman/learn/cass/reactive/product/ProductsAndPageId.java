@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 public class ProductsAndPageId {
     private List<Product> products;
-    private String pageID;
+    private String nextPageID;
 }
