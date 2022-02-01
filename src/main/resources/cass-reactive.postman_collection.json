@@ -28,7 +28,31 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/products/page/00190010101645ea5914bd11e5a9938138354b7e7000f07ffffffd00009534cb800ae81cec40e240d0d070d5780042",
+					"raw": "{{server}}/products/page?pageSize=2",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products",
+						"page"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProductsPageNext",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/products/page/00190010101645ea5914bd11e5a9938138354b7e7000f07ffffffd00009534cb800ae81cec40e240d0d070d5780042?pageSize=4",
 					"host": [
 						"{{server}}"
 					],
@@ -36,6 +60,12 @@
 						"products",
 						"page",
 						"00190010101645ea5914bd11e5a9938138354b7e7000f07ffffffd00009534cb800ae81cec40e240d0d070d5780042"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "4"
+						}
 					]
 				}
 			},
