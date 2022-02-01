@@ -21,12 +21,16 @@ public class ProductPagingDao {
     @Autowired
     CqlSession session;
 
-    public ProductsAndPageId getProductsFirstPage() {
-        return getNextPage(session.execute(allProductsQry));
+    public ProductsAndPageId getProductsFirstPage(int pageSize) {
+        SimpleStatement statement = SimpleStatement.builder(allProductsQry)
+                .setPageSize(pageSize)
+                .build();
+        return getNextPage(session.execute(statement));
     }
 
-    public ProductsAndPageId getProductsNextPage(PagingState pagingState) {
+    public ProductsAndPageId getProductsNextPage(PagingState pagingState, int pageSize) {
         SimpleStatement statement = SimpleStatement.builder(allProductsQry)
+                .setPageSize(pageSize)
                 .setPagingState(pagingState.getRawPagingState()).build();
         return getNextPage(session.execute(statement));
     }

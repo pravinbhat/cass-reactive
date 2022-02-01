@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -52,13 +53,20 @@ public class ProductController {
         }
 
         @GetMapping(value = "/page", produces = APPLICATION_JSON_VALUE)
-        public ProductsAndPageId getProductsFirstPage() {
-                return productPagingDao.getProductsFirstPage();
+        public ProductsAndPageId getProductsFirstPage(@RequestParam(required = false) Integer pageSize) {
+                if (pageSize == null) {
+                        pageSize = 3;
+                }
+                return productPagingDao.getProductsFirstPage(pageSize);
         }
 
         @GetMapping(value = "/page/{pageId}", produces = APPLICATION_JSON_VALUE)
-        public ProductsAndPageId getProductsPage(@PathVariable("pageId") String pageId) {
-                return productPagingDao.getProductsNextPage(PagingState.fromString(pageId));
+        public ProductsAndPageId getProductsPage(@PathVariable("pageId") String pageId,
+                        @RequestParam(required = false) Integer pageSize) {
+                if (pageSize == null) {
+                        pageSize = 3;
+                }
+                return productPagingDao.getProductsNextPage(PagingState.fromString(pageId), pageSize);
         }
 
         @GetMapping(value = "/{id}/price/{price}", produces = APPLICATION_JSON_VALUE)
