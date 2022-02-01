@@ -119,7 +119,7 @@ public class ProductController {
                         @RequestBody @NotBlank ProductsIn productsIn) {
                 Objects.requireNonNull(productsIn);
                 ProductEntity pe = MappingUtils.mapProductAsEntity(productsIn.getProduct());
-                return Flux.fromStream(productsIn.getProductIds().stream().map(pId -> {
+                return Flux.fromStream(productsIn.getProductIds().parallelStream().map(pId -> {
                         pe.setProductId(pId);
                         return pe;
                 })).flatMap(pE -> upsertProduct(pE));
